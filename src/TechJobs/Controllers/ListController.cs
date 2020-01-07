@@ -7,10 +7,13 @@ namespace TechJobs.Controllers
 {
     public class ListController : Controller
     {
+        //* creates a static dictionary called columnChoices
         internal static Dictionary<string, string> columnChoices = new Dictionary<string, string>();
 
         // This is a "static constructor" which can be used
         // to initialize static members of a class
+        //* cannot be called drectly. Is handled by the common language runtime (CLR) and is invoked automtically 
+        //* typiclly used when the class is using a log flie and the constructor is used to write entries to this file. 
         static ListController() 
         {
             
@@ -23,6 +26,7 @@ namespace TechJobs.Controllers
 
         public IActionResult Index()
         {
+            //*populates the columns ViewBag with the ColumnChoices
             ViewBag.columns = columnChoices;
             return View();
         }
