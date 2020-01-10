@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TechJobs.Models;
 
 namespace TechJobs.Controllers
@@ -8,7 +7,7 @@ namespace TechJobs.Controllers
     {
         public IActionResult Index()
         {
-            //* refrences(?) the columns ViewBag from the ColumnChoices row from the List Controller
+            //* refrences the columns ViewBag from the ColumnChoices row from the List Controller
             ViewBag.columns = ListController.columnChoices;
             ViewBag.title = "Search";
             return View();
@@ -16,17 +15,27 @@ namespace TechJobs.Controllers
 
         // TODO #1 - Create a Results action method to process 
         // search request and display results
-        [HttpPost]
         
+        [HttpGet]
         public IActionResult Results(string searchType, string searchTerm)
-        {
-
-            // search the dictionary for the searchType (key) return all the values associated with this 
+        { 
+            ViewBag.columns = ListController.columnChoices;
+            ViewBag.title = "Search";
+            // use FindByColumnAndValue to complete your searches
+            // search the dictionary for the searchType (column) return all the values associated with this 
             // search the dictionary for the searchTerm (value) return all the values matching this term
+            // jobs comes back from the FBC&V send results to the search index  - viewbag.jobs
 
-            // send results to the search index  - viewbag.jobs
-            ViewBag.jobs = jobs;
-            return View("/Search/Results?" + );
+            if (searchType.Equals("all"))
+            {
+                ViewBag.jobs = JobData.FindByValue(searchTerm);
+            }
+            else
+            {
+                ViewBag.jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
+            }
+
+            return View("Index");
         }
     }
 }
